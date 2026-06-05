@@ -3,3 +3,10 @@ __pycache__/
 *.pyc
 .DS_Store
 *.task
+SETUP.md
+assets/
+booth.py
+launcher.sh
+mirror.py
+requirements.txt
+wig.png
