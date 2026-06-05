@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bureau of Deity Regulation — Portal 42-A</title>
+  <style>
+    /* ===== RESET & BASE ===== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background-color: #c8d5e0;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 13px;
+      color: #1a1a1a;
+      min-height: 100vh;
+    }
+
+    /* ===== TOP UTILITY BAR ===== */
+    #util-bar {
+      background: #003366;
+      color: #ffffff;
+      font-size: 11px;
+      padding: 3px 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2px solid #c8960c;
+    }
+    #util-bar a { color: #aaccee; text-decoration: underline; cursor: pointer; }
+    #util-bar .blink { animation: blink 1.1s step-start infinite; color: #ffff00; font-weight: bold; }
+    @keyframes blink { 50% { opacity: 0; } }
+
+    /* ===== HEADER ===== */
+    #site-header {
+      background: linear-gradient(180deg, #003366 0%, #004080 60%, #1a5599 100%);
+      color: #ffffff;
+      padding: 0;
+      border-bottom: 4px solid #c8960c;
+    }
+    #header-inner {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 12px 14px 10px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    #seal {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 40% 40%, #f0d060, #c8960c 50%, #8a6200);
+      border: 2px solid #f0d060;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      flex-shrink: 0;
+      box-shadow: 0 0 0 2px #003366, 0 0 0 4px #c8960c;
+    }
+    #header-text h1 {
+      font-size: clamp(14px, 4vw, 22px);
+      font-weight: bold;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      line-height: 1.15;
+      text-shadow: 1px 1px 0 #001133;
+    }
+    #header-text .sub {
+      font-size: clamp(9px, 2vw, 11px);
+      color: #aaccee;
+      margin-top: 3px;
+      letter-spacing: 0.5px;
+    }
+    #header-text .tagline {
+      font-size: clamp(10px, 2.5vw, 12px);
+      color: #f0d060;
+      font-style: italic;
+      margin-top: 4px;
+    }
+
+    /* nav strip */
+    #nav-strip {
+      background: #1a5599;
+      border-top: 1px solid #4488bb;
+      border-bottom: 1px solid #002244;
+      font-size: 11px;
+    }
+    #nav-strip ul {
+      max-width: 900px;
+      margin: 0 auto;
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+    }
+    #nav-strip ul li {
+      flex: 1 1 auto;
+    }
+    #nav-strip ul li a {
+      display: block;
+      padding: 6px 10px;
+      color: #d0e8ff;
+      text-decoration: none;
+      border-right: 1px solid #4488bb;
+      border-bottom: 1px solid #2266aa;
+      text-align: center;
+      white-space: nowrap;
+    }
+    #nav-strip ul li a:hover { background: #003366; }
+    #nav-strip ul li.active a { background: #c8960c; color: #ffffff; font-weight: bold; }
+
+    /* ===== ALERT BANNER ===== */
+    .alert-red {
+      background: #cc0000;
+      color: #ffffff;
+      border: 2px solid #880000;
+      padding: 8px 16px;
+      font-weight: bold;
+      font-size: 12px;
+      text-align: center;
+      letter-spacing: 0.5px;
+    }
+    .alert-yellow {
+      background: #fff3cd;
+      color: #5a3a00;
+      border: 2px solid #c8960c;
+      padding: 7px 16px;
+      font-size: 12px;
+      text-align: center;
+    }
+    .alert-yellow strong { color: #8a0000; }
+
+    /* ===== MAIN LAYOUT ===== */
+    #page-wrapper {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 16px 12px 40px;
+      display: flex;
+      gap: 14px;
+    }
+
+
+    /* ===== MAIN CONTENT ===== */
+    #main-content { flex: 1; min-width: 0; }
+
+    .section-title {
+      background: #003366;
+      color: #ffffff;
+      font-size: 13px;
+      font-weight: bold;
+      padding: 5px 10px;
+      border: 1px solid #001a33;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 0;
+    }
+
+    /* intro box */
+    .intro-box {
+      background: #f4f7fa;
+      border: 1px solid #8899aa;
+      border-top: none;
+      padding: 12px 14px;
+      font-size: 12px;
+      line-height: 1.6;
+      margin-bottom: 14px;
+    }
+    .intro-box p { margin-bottom: 8px; }
+    .intro-box .ordinance {
+      background: #fffbe6;
+      border-left: 4px solid #c8960c;
+      padding: 8px 12px;
+      font-size: 11px;
+      color: #4a3000;
+      margin-top: 8px;
+    }
+
+    /* ===== FORM ===== */
+    #confession-form {
+      background: #f4f7fa;
+      border: 1px solid #8899aa;
+    }
+
+    .form-section {
+      border-bottom: 1px solid #c0ccdd;
+      padding: 14px;
+    }
+    .form-section:last-of-type { border-bottom: none; }
+
+    .field-label {
+      font-weight: bold;
+      font-size: 12px;
+      color: #003366;
+      margin-bottom: 3px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .field-number {
+      display: inline-block;
+      background: #003366;
+      color: #fff;
+      font-size: 10px;
+      font-weight: bold;
+      padding: 1px 6px;
+      margin-right: 6px;
+    }
+    .field-sublabel {
+      font-size: 11px;
+      color: #555;
+      margin-bottom: 6px;
+      font-style: italic;
+    }
+
+    input[type="text"],
+    input[type="number"] {
+      width: 100%;
+      padding: 5px 7px;
+      border: 1px solid #7799bb;
+      background: #ffffff;
+      font-size: 13px;
+      font-family: "Courier New", monospace;
+      color: #1a1a1a;
+      outline: none;
+    }
+    input[type="text"]:focus,
+    input[type="number"]:focus {
+      border-color: #003366;
+      background: #f0f8ff;
+    }
+    .input-hint {
+      font-size: 10px;
+      color: #667788;
+      margin-top: 3px;
+    }
+
+    .checkbox-group, .radio-group {
+      margin-top: 6px;
+    }
+    .checkbox-group label,
+    .radio-group label {
+      display: block;
+      padding: 5px 8px;
+      border: 1px solid transparent;
+      cursor: pointer;
+      font-size: 12px;
+      line-height: 1.4;
+    }
+    .checkbox-group label:hover,
+    .radio-group label:hover { background: #ddeeff; border-color: #8899aa; }
+
+    input[type="checkbox"], input[type="radio"] {
+      margin-right: 8px;
+      accent-color: #003366;
+    }
+
+    /* debt calculator section */
+    .debt-section {
+      background: #f9f0f0;
+      border: 1px solid #cc8888;
+    }
+    .debt-section .section-title {
+      background: #8a0000;
+    }
+    .debt-callout {
+      background: #fff0f0;
+      border: 1px dashed #cc0000;
+      padding: 8px 12px;
+      font-size: 11px;
+      color: #660000;
+      margin-top: 10px;
+      line-height: 1.5;
+    }
+    .debt-callout strong { color: #cc0000; }
+
+    #miracle-count-wrap {
+      display: none;
+      margin-top: 12px;
+    }
+    #miracle-count-wrap .field-label { color: #8a0000; }
+    input[type="number"] { width: 100px; }
+
+    /* running total */
+    #debt-total-box {
+      background: #1a1a1a;
+      color: #cccccc;
+      font-family: "Courier New", monospace;
+      font-size: 13px;
+      padding: 10px 14px;
+      margin-top: 12px;
+      border: 2px solid #666666;
+    }
+    #debt-total-box .dt-label { font-size: 10px; color: #888888; letter-spacing: 1px; text-transform: uppercase; }
+    #debt-total-box .dt-amount { font-size: 22px; font-weight: bold; margin: 4px 0; }
+    #debt-total-box .dt-years { font-size: 11px; color: #aaaaaa; }
+
+    /* submit button */
+    .submit-area {
+      padding: 16px 14px;
+      background: #e8eef4;
+      border-top: 2px solid #8899aa;
+      text-align: center;
+    }
+    #submit-btn {
+      background: linear-gradient(180deg, #b22222, #8a0000);
+      color: #ffffff;
+      border: 2px outset #cc3333;
+      font-size: 14px;
+      font-weight: bold;
+      padding: 10px 32px;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+    #submit-btn:hover { background: linear-gradient(180deg, #cc2222, #a00000); }
+    #submit-btn:active { border-style: inset; }
+    .submit-warning {
+      font-size: 10px;
+      color: #666;
+      margin-top: 8px;
+    }
+
+    /* ===== CONFIRMATION OVERLAY ===== */
+    #confirmation-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.75);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+    }
+    #confirmation-overlay.active { display: flex; }
+    @keyframes flashGreen { 0%,100%{background:#1a1a1a} 15%,35%,55%{background:#004400} 25%,45%{background:#006600} }
+    #confirmation-box {
+      background: #f4f7fa;
+      border: 3px solid #007700;
+      max-width: 600px;
+      width: 94%;
+      font-family: Arial, Helvetica, sans-serif;
+      animation: flashGreen 1.2s ease-out;
+    }
+    #conf-header {
+      background: #007700;
+      color: #ffffff;
+      padding: 12px 16px;
+      font-size: 15px;
+      font-weight: bold;
+      letter-spacing: 1px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    #conf-header .checkmark { font-size: 22px; }
+    #conf-body {
+      padding: 18px;
+      font-size: 12px;
+      line-height: 1.7;
+    }
+    #conf-body .conf-stamp {
+      border: 2px solid #007700;
+      padding: 8px 14px;
+      margin-bottom: 14px;
+      background: #eefaee;
+      font-size: 11px;
+    }
+    #conf-body .conf-stamp .case-num {
+      font-family: "Courier New", monospace;
+      font-size: 10px;
+      color: #555;
+    }
+    #conf-body .conf-stamp .status {
+      font-size: 13px;
+      font-weight: bold;
+      color: #006600;
+      margin: 3px 0;
+    }
+    #conf-body .conf-stamp .fine-line {
+      font-family: "Courier New", monospace;
+      font-size: 11px;
+      color: #333;
+    }
+
+    .directive-box {
+      background: #fffbe6;
+      border: 2px solid #c8960c;
+      padding: 10px 14px;
+      font-size: 12px;
+      margin-top: 12px;
+    }
+    .directive-box .dir-title {
+      font-weight: bold;
+      color: #8a0000;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 8px;
+    }
+    .directive-box ul {
+      list-style: disc;
+      padding-left: 20px;
+      margin-bottom: 8px;
+    }
+    .directive-box ul li { margin-bottom: 4px; }
+    .directive-box .penalty {
+      font-size: 11px;
+      color: #8a0000;
+      border-top: 1px solid #c8960c;
+      padding-top: 7px;
+      margin-top: 7px;
+    }
+
+    #logout-btn {
+      display: block;
+      width: 100%;
+      background: linear-gradient(180deg, #003366, #001a33);
+      color: #aaccee;
+      border: 2px outset #336699;
+      font-size: 13px;
+      font-weight: bold;
+      padding: 10px;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-top: 16px;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+    #logout-btn:hover { background: linear-gradient(180deg, #004488, #002244); color: #ffffff; }
+    #logout-btn:active { border-style: inset; }
+
+    /* ===== FOOTER ===== */
+    #site-footer {
+      background: #003366;
+      color: #8899aa;
+      font-size: 10px;
+      text-align: center;
+      padding: 10px;
+      border-top: 3px solid #c8960c;
+      margin-top: 20px;
+    }
+    #site-footer p { margin-bottom: 4px; }
+
+    /* ===== MISC ===== */
+    .required-star { color: #cc0000; font-weight: bold; }
+    .section-gap { margin-bottom: 14px; }
+    .text-red { color: #cc0000; font-weight: bold; }
+
+    /* scrolling marquee strip */
+    .marquee-strip {
+      background: #001a33;
+      color: #ffff00;
+      font-size: 11px;
+      padding: 4px 0;
+      overflow: hidden;
+      white-space: nowrap;
+      border-bottom: 1px solid #004080;
+    }
+    .marquee-inner {
+      display: inline-block;
+      animation: scroll-left 60s linear infinite;
+    }
+    @keyframes scroll-left {
+      0% { transform: translateX(100vw); }
+      100% { transform: translateX(-100%); }
+    }
+  </style>
+</head>
+<body>
+
+<!-- UTILITY BAR -->
+<div id="util-bar">
+  <span>Portal 42-A &nbsp;|&nbsp; <a>Accessibility</a> &nbsp;|&nbsp; <a>Find a Licensed BDR Priest</a> &nbsp;|&nbsp; <a>Contact BDR</a></span>
+  <span class="blink">⚠ SYSTEM ALERT: Unauthorized deity activity detected in your sector</span>
+  <span>Session expires in: <span id="session-timer">14:47</span></span>
+</div>
+
+<!-- HEADER -->
+<div id="site-header">
+  <div id="header-inner">
+    <div id="seal">⚖</div>
+    <div id="header-text">
+      <h1>Bureau of Deity Regulation</h1>
+      <div class="sub">Department of Cosmic Compliance &nbsp;·&nbsp; Office of Spiritual Licensing &nbsp;·&nbsp; Est. 1904</div>
+      <div class="tagline">"Because an intermediary is not optional."</div>
+    </div>
+  </div>
+  <nav id="nav-strip">
+    <ul>
+      <li><a href="#">Home</a></li>
+      <li class="active"><a href="#">Portal 42-A: Confession</a></li>
+      <li><a href="#">FAQ: Am I a Deity?</a></li>
+      <li><a href="#">Miracle Licensing</a></li>
+      <li><a href="#">Appeals</a></li>
+      <li><a href="#">Pay Fines</a></li>
+      <li><a href="#">Contact</a></li>
+    </ul>
+  </nav>
+</div>
+
+<!-- MARQUEE -->
+<div class="marquee-strip">
+  <span class="marquee-inner">
+    &nbsp;&nbsp;&nbsp;
+    NOTICE: Self-issued deity cards are NOT recognized by the Bureau. &nbsp;·&nbsp;
+    BDR Form 7-A (Application for Inherent Worthiness) is now available for download. &nbsp;·&nbsp;
+    Cosmic waiting room delays: currently 847–1,200 years. Plan accordingly. &nbsp;·&nbsp;
+    Unauthorized manifestation of parking spaces is subject to audit. &nbsp;·&nbsp;
+    All unearned joy must be reported within 30 cosmic days. &nbsp;·&nbsp;
+    The Demigod's office hours are Tuesdays, 6:00 PM CST (Cosmic Standard Time). &nbsp;·&nbsp;
+    If you believe you have received this notice in error, you have not. &nbsp;&nbsp;&nbsp;
+  </span>
+</div>
+
+<!-- ALERT BANNERS -->
+<div class="alert-red">
+  ⚠&nbsp; MANDATORY COMPLIANCE ACTION REQUIRED &nbsp;⚠ &nbsp; Failure to complete this form may result in immediate revocation of privileges.
+</div>
+
+<!-- PAGE WRAPPER -->
+<div id="page-wrapper">
+
+  <!-- MAIN CONTENT -->
+  <main id="main-content">
+
+    <div class="section-title">PORTAL 42-A: CONFESSION OF SELF-APOTHEOSIS &amp; SPIRITUAL RESTITUTION CALCULATOR</div>
+    <div class="intro-box section-gap">
+      <p>Use this terminal to <strong>confess your self-apotheosis</strong>, log your transgressions, and calculate your required spiritual restitution.</p>
+      <p>All fields marked <span class="required-star">*</span> are mandatory. Incomplete submissions will be forwarded to the BDR Enforcement Division and may result in immediate enrollment in the cosmic waiting room.</p>
+      <div class="ordinance">
+        <strong>§ ORDINANCE NOTICE:</strong> Under Section 4 of the 1904 Ordinance, any mortal acting as their own spiritual authority is operating an unlicensed church of one. Self-issued deity status is not recognized by the Bureau and constitutes a Class A Cosmic Infraction.
+      </div>
+    </div>
+
+    <form id="confession-form" onsubmit="handleSubmit(event)">
+
+      <!-- FIELD 1 -->
+      <div class="form-section">
+        <div class="field-label"><span class="field-number">FIELD 1</span> WHAT ARE YOU THE GOD OF? <span class="required-star">*</span></div>
+        <div class="field-sublabel">Name of the Errant Idol — What false, blasphemous deity title did you claim for yourself from the unvetted card deck?</div>
+        <input type="text" id="deity-name" placeholder="e.g., The God of Suction Cups" required maxlength="200" />
+        <div class="input-hint">⚠ This title will be entered into the BDR Registry.</div>
+      </div>
+
+      <!-- FIELD 2 -->
+      <div class="form-section">
+        <div class="field-label"><span class="field-number">FIELD 2</span> NATURE OF THE HERESY <span class="required-star">*</span></div>
+        <div class="field-sublabel">Select your primary transgression(s):</div>
+        <div class="checkbox-group">
+          <label>
+            <input type="checkbox" name="heresy" value="pride" />
+            <strong>Pride / Self-Grace:</strong> Believing you are inherently worthy without filling out BDR Form 7-A.
+          </label>
+          <label>
+            <input type="checkbox" name="heresy" value="presence" />
+            <strong>Unauthorized Presence:</strong> Attempting spiritual fulfillment without paying a licensed BDR priest to explain it to you.
+          </label>
+          <label>
+            <input type="checkbox" name="heresy" value="contemplation" />
+            <strong>Independent Contemplation:</strong> Looking too closely into the void without a certified BDR spiritual safety harness.
+          </label>
+        </div>
+      </div>
+
+      <!-- FIELD 3: DEBT CALCULATOR -->
+      <div class="section-gap">
+        <div class="section-title" style="background:#8a0000;">FIELD 3 — AUDIT OF BLASPHEMOUS ACTIONS</div>
+        <div class="form-section debt-section" style="border-top:none;">
+          <div class="field-label" style="color:#8a0000;">Have you already acted with divine power over your chosen domain? <span class="required-star">*</span></div>
+
+          <div class="radio-group">
+            <label>
+              <input type="radio" name="acted" value="no" required onchange="updateDebt()" />
+              <strong>No.</strong> I am just holding the card and feeling smug.
+              <span class="text-red">&rarr; Accrued Debt: 500 Spiritual Credits (Imperfect Contrition Fee)</span>
+            </label>
+            <label>
+              <input type="radio" name="acted" value="yes" onchange="updateDebt()" />
+              <strong>Yes.</strong> I have actively performed miracles or altered reality.
+            </label>
+          </div>
+
+          <div id="miracle-count-wrap">
+            <div class="field-label" style="margin-top:10px; color:#8a0000;">How many times have you flexed your unauthorized god-hood? <span class="required-star">*</span></div>
+            <div class="field-sublabel">Enter number of miracles performed:</div>
+            <input type="number" id="miracle-count" min="0" max="99999" placeholder="0" oninput="updateDebt()" />
+            <div class="debt-callout">
+              <strong>NOTE:</strong> Each unauthorized act of divine intervention — including but not limited to: feeling universally aligned, manifesting a parking spot, or experiencing <strong>unearned joy</strong> — incurs a flat <strong>1,000 Spiritual Credit fine</strong> and adds <strong>three hundred years</strong> to your stay in the cosmic waiting room.
+            </div>
+          </div>
+
+          <div id="debt-total-box">
+            <div class="dt-label">// BDR DEBT CALCULATOR — LIVE ASSESSMENT //</div>
+            <div class="dt-amount" id="dt-credits">0 Spiritual Credits</div>
+            <div class="dt-years" id="dt-years">Cosmic Waiting Room: +0 years</div>
+            <div class="dt-years" style="margin-top:4px; font-size:10px; color:#555555;">[ Debt accrues in real time. There is no cap. ]</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SUBMIT -->
+      <div class="submit-area">
+        <button type="submit" id="submit-btn">[ SUBMIT CONFESSION &amp; PLEAD FOR MERCY ]</button>
+        <div class="submit-warning">
+          By clicking this button, you acknowledge that all information provided is true and binding under cosmic law.<br/>
+          The Bureau is not responsible for emotional distress caused by accurate spiritual debt assessments.
+        </div>
+      </div>
+
+    </form>
+  </main>
+</div>
+
+<!-- FOOTER -->
+<div id="site-footer">
+  <p><strong>Bureau of Deity Regulation</strong> &nbsp;·&nbsp; Department of Cosmic Compliance &nbsp;·&nbsp; Office of Spiritual Licensing</p>
+  <p>Portal 42-A is a secure government terminal. All confessions are monitored, recorded, and submitted to the Demigod's office automatically.</p>
+  <p>BDR.gov &nbsp;|&nbsp; Accessibility &nbsp;|&nbsp; Privacy Policy &nbsp;|&nbsp; No Cookies (We Already Know Everything) &nbsp;|&nbsp; FOIA</p>
+  <p style="margin-top:6px; color:#556677;">Browser compatibility: Best viewed in Internet Explorer 6.0 at 800×600 resolution.</p>
+</div>
+
+<!-- CONFIRMATION OVERLAY -->
+<div id="confirmation-overlay">
+  <div id="confirmation-box">
+    <div id="conf-header">
+      <span class="checkmark">✅</span>
+      APPLICATION FOR MERCY: APPROVED WITH CONDITIONS
+    </div>
+    <div id="conf-body">
+      <div class="conf-stamp">
+        <div class="case-num" id="case-num">CASE NO.: BDR-42A-XXXXXXXX &nbsp;|&nbsp; STATUS: PROCESSED &nbsp;|&nbsp; DATE: —</div>
+        <div class="status">✔ TEMPORARY DISPENSATION OF GRACE GRANTED</div>
+        <div class="fine-line" id="fine-line">Outstanding Spiritual Debt: FROZEN (pending compliance)</div>
+      </div>
+
+      <p>The Demigod has reviewed your confession, assessed your baseline unworthiness, and chosen to extend a <strong>temporary dispensation of grace.</strong></p>
+      <p style="margin-top:8px;">Your spiritual fines have been <strong>frozen</strong>, and you are permitted to <strong>retain your minor deity status</strong> for the time being.</p>
+
+      <div class="directive-box">
+        <div class="dir-title">⚠ MANDATORY COMPLIANCE DIRECTIVE</div>
+        <p>You are now <strong>legally required</strong> to attend the mandatory BDR Deity Alignment &amp; Status Update Meetings:</p>
+        <ul style="margin-top:8px;">
+          <li><strong>Frequency:</strong> Every Tuesday</li>
+          <li><strong>Time:</strong> 6:00 PM (Cosmic Standard Time)</li>
+          <li><strong>Platform:</strong> Held via Zoom</li>
+        </ul>
+        <p style="margin-top:8px;"><strong>Note:</strong> Camera usage is mandatory. Please ensure your aura is visible.</p>
+        <div class="penalty">
+          ⚠ Failure to log in or leaving your mic unmuted while eating lunch will result in <strong>immediate revocation of your divinity</strong> and a return to baseline mortal misery.
+        </div>
+      </div>
+
+      <button id="logout-btn" onclick="handleLogout()">[ LOG OUT OF THE SPIRITUAL PLANE ]</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Session timer countdown
+  let totalSeconds = 14 * 60 + 47;
+  setInterval(() => {
+    if (totalSeconds > 0) totalSeconds--;
+    const m = String(Math.floor(totalSeconds / 60)).padStart(2, '0');
+    const s = String(totalSeconds % 60).padStart(2, '0');
+    document.getElementById('session-timer').textContent = m + ':' + s;
+  }, 1000);
+
+  // Last updated timestamp
+  const now = new Date();
+  document.getElementById('last-updated').textContent =
+    now.toLocaleDateString('en-US') + ' ' + now.toLocaleTimeString('en-US', {hour:'2-digit', minute:'2-digit'});
+
+  // Show/hide miracle count input
+  function updateDebt() {
+    const acted = document.querySelector('input[name="acted"]:checked');
+    const wrap = document.getElementById('miracle-count-wrap');
+    if (acted && acted.value === 'yes') {
+      wrap.style.display = 'block';
+    } else {
+      wrap.style.display = 'none';
+    }
+    recalculate();
+  }
+
+  function recalculate() {
+    const acted = document.querySelector('input[name="acted"]:checked');
+    let credits = 0;
+    let years = 0;
+
+    if (!acted) {
+      setDebt(0, 0);
+      return;
+    }
+
+    if (acted.value === 'no') {
+      credits = 500;
+      years = 0;
+    } else if (acted.value === 'yes') {
+      const miracles = parseInt(document.getElementById('miracle-count').value) || 0;
+      credits = miracles * 1000;
+      years = miracles * 300;
+    }
+
+    setDebt(credits, years);
+  }
+
+  function setDebt(credits, years) {
+    document.getElementById('dt-credits').textContent =
+      credits.toLocaleString() + ' Spiritual Credits';
+    document.getElementById('dt-years').textContent =
+      'Cosmic Waiting Room: +' + years.toLocaleString() + ' years';
+  }
+
+  // Submit
+  function handleSubmit(e) {
+    e.preventDefault();
+
+    const deityName = document.getElementById('deity-name').value.trim() || 'UNREGISTERED ENTITY';
+    const acted = document.querySelector('input[name="acted"]:checked');
+    let credits = 0;
+    let years = 0;
+
+    if (acted) {
+      if (acted.value === 'no') {
+        credits = 500;
+      } else {
+        const miracles = parseInt(document.getElementById('miracle-count').value) || 0;
+        credits = miracles * 1000;
+        years = miracles * 300;
+      }
+    }
+
+    const caseNum = 'BDR-42A-' + Math.floor(Math.random() * 90000000 + 10000000);
+    const dateStr = new Date().toLocaleDateString('en-US');
+
+    document.getElementById('case-num').textContent =
+      'CASE NO.: ' + caseNum + '  |  STATUS: PROCESSED  |  DATE: ' + dateStr;
+    document.getElementById('fine-line').textContent =
+      '"' + deityName + '" — Outstanding Debt: ' + credits.toLocaleString() + ' Spiritual Credits / +'
+      + years.toLocaleString() + ' yrs — FROZEN (pending compliance)';
+
+    document.getElementById('confirmation-overlay').classList.add('active');
+    document.getElementById('confirmation-overlay').scrollTop = 0;
+  }
+
+  // Logout
+  function handleLogout() {
+    document.getElementById('confirmation-overlay').classList.remove('active');
+    document.getElementById('confession-form').reset();
+    document.getElementById('miracle-count-wrap').style.display = 'none';
+    setDebt(0, 0);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+</script>
+
+</body>
+</html>
