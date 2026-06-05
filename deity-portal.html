@@ -532,7 +532,8 @@
       </div>
     </div>
 
-    <form id="confession-form" onsubmit="handleSubmit(event)">
+    <form id="confession-form" name="confession" data-netlify="true" onsubmit="handleSubmit(event)">
+      <input type="hidden" name="form-name" value="confession" />
 
       <!-- FIELD 1 -->
       <div class="form-section">
@@ -715,6 +716,7 @@
   function handleSubmit(e) {
     e.preventDefault();
 
+    const form = document.getElementById('confession-form');
     const deityName = document.getElementById('deity-name').value.trim() || 'UNREGISTERED ENTITY';
     const acted = document.querySelector('input[name="acted"]:checked');
     let credits = 0;
@@ -732,6 +734,12 @@
 
     const caseNum = 'BDR-42A-' + Math.floor(Math.random() * 90000000 + 10000000);
     const dateStr = new Date().toLocaleDateString('en-US');
+
+    fetch('/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams(new FormData(form)).toString()
+    }).catch(() => {}); // show confirmation regardless
 
     document.getElementById('case-num').textContent =
       'CASE NO.: ' + caseNum + '  |  STATUS: PROCESSED  |  DATE: ' + dateStr;
